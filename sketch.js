@@ -1,5 +1,5 @@
 let isMouseDown = false; // Flag to track if the mouse button is pressed
-
+let toggleBorders = false; //Flag for turning borders on/off
 // Add event listeners to track mouse state globally
 document.body.addEventListener('mousedown', () => isMouseDown = true);
 document.body.addEventListener('mouseup', () => isMouseDown = false);
@@ -99,6 +99,7 @@ let resize = () => {
         } else {
             alert("Please enter a valid number for width.");
         }
+        clear(); //re-attach event listener after re-size
     });
 };
 
@@ -112,6 +113,25 @@ let clear = () => {
     })
 }
 
+let toggle = () => {
+    const toggleBtn = document.querySelector(".toggle");
+    const cells = document.querySelectorAll(".gridCell");
+    const styleSheet = document.styleSheets[0];
+    toggleBtn.addEventListener("click", () => {
+        if(!toggleBorders)
+        {
+            toggleBorders = true;
+            styleSheet.cssRules[3].style.border = null;
+        }
+        else
+        {
+            toggleBorders = false;
+            styleSheet.cssRules[3].style.border = "solid black 1px";
+        }
+    });
+};
+
 createGrid(16, 16);
 resize();
 clear();
+toggle();
