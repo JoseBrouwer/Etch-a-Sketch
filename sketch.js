@@ -1,3 +1,9 @@
+let isMouseDown = false; // Flag to track if the mouse button is pressed
+
+// Add event listeners to track mouse state globally
+document.body.addEventListener('mousedown', () => isMouseDown = true);
+document.body.addEventListener('mouseup', () => isMouseDown = false);
+
 let createGrid = (width, height) => {
     const body = document.querySelector("body");
     const container = document.createElement("div");
@@ -17,9 +23,14 @@ let createGrid = (width, height) => {
         for(let i = 0; i < height; i++) {
             const gridCell = document.createElement("div");
             gridCell.classList.add("gridCell");
-
+            
+            //Event handlers for click and drag
+            gridCell.addEventListener("mousedown", () => {
+                paintCell(gridCell); //initial mouse click
+            });
             gridCell.addEventListener("mouseenter", () => {
-                paintCell(gridCell);
+                if(isMouseDown) //check mose is held down to paint
+                    paintCell(gridCell);
             });
 
             col.appendChild(gridCell);
@@ -62,7 +73,6 @@ let paintCell = (cell) => {
         cell.setAttribute("style", `background: ${selectedColor}; opacity: ${opacity};`);
     }
 };
-
 
 let resize = () => {
     const resizeBtn = document.querySelector(".resize");
