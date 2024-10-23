@@ -18,9 +18,21 @@ let createGrid = (width, height) => {
             const gridCell = document.createElement("div");
             gridCell.classList.add("gridCell");
 
+            gridCell.addEventListener("mouseenter", () => {
+                paintCell(gridCell);
+            });
+
             col.appendChild(gridCell);
         };
     });
 };
 
 createGrid(16, 16);
+
+let paintCell = (cell) => {
+    cell.classList.toggle("painted");
+    if(cell.classList.contains("painted"))
+        cell.setAttribute("style", "background: blue;" )
+    else
+        cell.setAttribute("style", "background: white;" )
+}
